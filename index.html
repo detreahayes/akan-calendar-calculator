@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akan Name & Day Calculator</title>
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
         <div class="calculator-card">
             <h1>Akan Name Finder</h1>
-            <p class="subtitle">Discover your traditional Ghanaian day name and character traits based on the Akan calendar.</p>
+            <p class="subtitle">Discover your traditional Ghanaian day name, character traits, and associated foods based on the Akan calendar.</p>
             
             <div class="input-group">
                 <label for="birthdate">Select Your Birthdate</label>
@@ -33,25 +33,73 @@
                 <h3 id="akanName">Kofi</h3>
                 <p style="margin: 5px 0 0 0;">Born on a: <strong id="bornDay" style="color: var(--accent-cyan);">Friday</strong></p>
                 <p class="char-trait" id="traits">Characteristics: Wanderer, explorer, or protector.</p>
+                
+                <div class="food-section">
+                    <p style="margin: 15px 0 5px 0; color: #888; font-size: 0.85rem; text-transform: uppercase;">Traditional Food Pairings:</p>
+                    <ul id="foodList"></ul>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
         const akanData = {
-            0: { day: "Sunday", male: "Kwasi", female: "Akosua", traits: "Associated with the sun. Characterized as natural leaders, resilient, and highly respected." },
-            1: { day: "Monday", male: "Kojo", female: "Adwoa", traits: "Associated with peace. Characterized as calm, rational, protectors, and deliberate thinkers." },
-            2: { day: "Tuesday", male: "Kwabena", female: "Abenaa", traits: "Associated with the ocean. Characterized as fierce, friendly, compassionate, and highly driven." },
-            3: { day: "Wednesday", male: "Kwaku", female: "Akua", traits: "Associated with motherhood and tenacity. Characterized as strategic, sharp-witted, and natural problem-solvers." },
-            4: { day: "Thursday", male: "Yaw", female: "Yaa", traits: "Associated with the earth. Characterized as courageous, resolute, and deeply loyal." },
-            5: { day: "Friday", male: "Kofi", female: "Afia", traits: "Associated with fertility and creation. Characterized as dynamic, creative, wanderers, and highly expressive." },
-            6: { day: "Saturday", male: "Kwame", female: "Ama", traits: "Associated with God/Creation. Characterized as responsible, ancient souls, highly spiritual, and enduring." }
+            0: { 
+                day: "Sunday", 
+                male: "Kwasi", 
+                female: "Akosua", 
+                traits: "Associated with the sun. Characterized as natural leaders, resilient, and highly respected.",
+                foods: ["Omo Tuo (Rice Balls) with Groundnut Soup", "Fufu with Light Soup", "Kelewele (Spicy Fried Plantains)"]
+            },
+            1: { 
+                day: "Monday", 
+                male: "Kojo", 
+                female: "Adwoa", 
+                traits: "Associated with peace. Characterized as calm, rational, protectors, and deliberate thinkers.",
+                foods: ["Red Red (Bean Stew with Fried Plantains)", "Ampesi (Boiled Yam/Plantain with Kontomire)", "Boiled Egg with Pepper"]
+            },
+            2: { 
+                day: "Tuesday", 
+                male: "Kwabena", 
+                female: "Abenaa", 
+                traits: "Associated with the ocean. Characterized as fierce, friendly, compassionate, and highly driven.",
+                foods: ["Jollof Rice with Grilled Chicken", "Banku with Tilapia & Hot Pepper", "Ga Kenkey with Fried Fish"]
+            },
+            3: { 
+                day: "Wednesday", 
+                male: "Kwaku", 
+                female: "Akua", 
+                traits: "Associated with motherhood and tenacity. Characterized as strategic, sharp-witted, and natural problem-solvers.",
+                foods: ["Tuuo Zaafi (TZ)", "Waakye with Shito and Wele", "Fried Yam with Chofi (Turkey Tails)"]
+            },
+            4: { 
+                day: "Thursday", 
+                male: "Yaw", 
+                female: "Yaa", 
+                traits: "Associated with the earth. Characterized as courageous, resolute, and deeply loyal.",
+                foods: ["Eto (Mashed Yam/Plantain with Palm Oil and Roasted Eggs)", "Fufu with Palm Nut Soup", "Bofrot (Puff Puff)"]
+            },
+            5: { 
+                day: "Friday", 
+                male: "Kofi", 
+                female: "Afia", 
+                traits: "Associated with fertility and creation. Characterized as dynamic, creative, wanderers, and highly expressive.",
+                foods: ["Angwa Mo (Coconut/Oil Rice with Fried Egg)", "Banku with Okro Stew", "Roasted Plantain with Peanuts"]
+            },
+            6: { 
+                day: "Saturday", 
+                male: "Kwame", 
+                female: "Ama", 
+                traits: "Associated with God/Creation. Characterized as responsible, ancient souls, highly spiritual, and enduring.",
+                foods: ["Fufu with Goat Light Soup", "Kenkey with Sardines and Black Pepper", "Placali with Peanut Soup"]
+            }
         };
 
         function calculateAkanName() {
             const dateInput = document.getElementById('birthdate').value;
             const gender = document.getElementById('gender').value;
             const resultBox = document.getElementById('resultBox');
+            const foodListElement = document.getElementById('foodList');
 
             if (!dateInput) {
                 alert("Please select a valid birthdate first!");
@@ -66,10 +114,18 @@
             const dayOfWeek = dateObj.getDay();
             const data = akanData[dayOfWeek];
 
-            // Update DOM
+            // Update DOM text fields
             document.getElementById('akanName').innerText = data[gender];
             document.getElementById('bornDay').innerText = data.day;
             document.getElementById('traits').innerText = "Characteristics: " + data.traits;
+
+            // Clear previous food items and add new ones
+            foodListElement.innerHTML = "";
+            data.foods.forEach(food => {
+                const li = document.createElement('li');
+                li.innerText = food;
+                foodListElement.appendChild(li);
+            });
 
             // Smooth reveal
             resultBox.style.display = "block";
