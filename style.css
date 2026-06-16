@@ -1,0 +1,125 @@
+:root {
+    --bg-color: #000000; /* Pure black background */
+    --card-bg: #121212; /* Deep charcoal for contrast */
+    --text-primary: #ffffff;
+    --accent-gold: #ffb703; /* Vibrant West African inspired gold */
+    --accent-cyan: #00caee;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 550px;
+    width: 100%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+}
+
+.calculator-card {
+    background-color: var(--card-bg);
+    border: 1px solid #222;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+    text-align: center;
+}
+
+h1 {
+    color: var(--accent-gold);
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+p.subtitle {
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #bbb;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+input[type="date"], select {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+input[type="date"]:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+}
+
+button {
+    width: 100%;
+    background-color: var(--accent-gold);
+    color: #000;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+button:hover {
+    background-color: #f4a261;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.result-box {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #171717;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-gold);
+    display: none;
+    text-align: left;
+}
+
+.result-box h3 {
+    margin-top: 0;
+    color: var(--accent-gold);
+    font-size: 1.4rem;
+}
+
+.char-trait {
+    font-style: italic;
+    color: #ccc;
+    margin-top: 5px;
+}
