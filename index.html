@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akan Name & Day Calculator</title>
+    <style>
+        :root {
+            --bg-color: #000000; /* Pure black background */
+            --card-bg: #121212; /* Deep charcoal for contrast */
+            --text-primary: #ffffff;
+            --accent-gold: #ffb703; /* Vibrant West African inspired gold */
+            --accent-cyan: #00caee;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 550px;
+            width: 100%;
+            padding: 30px 20px;
+            box-sizing: border-box;
+        }
+
+        .calculator-card {
+            background-color: var(--card-bg);
+            border: 1px solid #222;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--accent-gold);
+            font-size: 2rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        p.subtitle {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #bbb;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input[type="date"], select {
+            width: 100%;
+            padding: 12px;
+            background-color: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s;
+        }
+
+        input[type="date"]:focus, select:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+        }
+
+        button {
+            width: 100%;
+            background-color: var(--accent-gold);
+            color: #000;
+            border: none;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #f4a261;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result-box {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #171717;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-gold);
+            display: none;
+            text-align: left;
+        }
+
+        .result-box h3 {
+            margin-top: 0;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+        }
+
+        .char-trait {
+            font-style: italic;
+            color: #ccc;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="calculator-card">
+            <h1>Akan Name Finder</h1>
+            <p class="subtitle">Discover your traditional Ghanaian day name and character traits based on the Akan calendar.</p>
+            
+            <div class="input-group">
+                <label for="birthdate">Select Your Birthdate</label>
+                <input type="date" id="birthdate" required>
+            </div>
+
+            <div class="input-group">
+                <label for="gender">Gender Identity</label>
+                <select id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            <button onclick="calculateAkanName()">Discover My Name</button>
+
+            <div class="result-box" id="resultBox">
+                <p style="margin: 0; color: #888; font-size: 0.85rem; text-transform: uppercase;">Your Akan Soul Name is:</p>
+                <h3 id="akanName">Kofi</h3>
+                <p style="margin: 5px 0 0 0;">Born on a: <strong id="bornDay" style="color: var(--accent-cyan);">Friday</strong></p>
+                <p class="char-trait" id="traits">Characteristics: Wanderer, explorer, or protector.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const akanData = {
+            0: { day: "Sunday", male: "Kwasi", female: "Akosua", traits: "Associated with the sun. Characterized as natural leaders, resilient, and highly respected." },
+            1: { day: "Monday", male: "Kojo", female: "Adwoa", traits: "Associated with peace. Characterized as calm, rational, protectors, and deliberate thinkers." },
+            2: { day: "Tuesday", male: "Kwabena", female: "Abenaa", traits: "Associated with the ocean. Characterized as fierce, friendly, compassionate, and highly driven." },
+            3: { day: "Wednesday", male: "Kwaku", female: "Akua", traits: "Associated with motherhood and tenacity. Characterized as strategic, sharp-witted, and natural problem-solvers." },
+            4: { day: "Thursday", male: "Yaw", female: "Yaa", traits: "Associated with the earth. Characterized as courageous, resolute, and deeply loyal." },
+            5: { day: "Friday", male: "Kofi", female: "Afia", traits: "Associated with fertility and creation. Characterized as dynamic, creative, wanderers, and highly expressive." },
+            6: { day: "Saturday", male: "Kwame", female: "Ama", traits: "Associated with God/Creation. Characterized as responsible, ancient souls, highly spiritual, and enduring." }
+        };
+
+        function calculateAkanName() {
+            const dateInput = document.getElementById('birthdate').value;
+            const gender = document.getElementById('gender').value;
+            const resultBox = document.getElementById('resultBox');
+
+            if (!dateInput) {
+                alert("Please select a valid birthdate first!");
+                return;
+            }
+
+            // Parse date manually to prevent timezone shifting issues
+            const dateParts = dateInput.split('-');
+            const dateObj = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+            
+            // Get day of the week (0 = Sunday, 1 = Monday, etc.)
+            const dayOfWeek = dateObj.getDay();
+            const data = akanData[dayOfWeek];
+
+            // Update DOM
+            document.getElementById('akanName').innerText = data[gender];
+            document.getElementById('bornDay').innerText = data.day;
+            document.getElementById('traits').innerText = "Characteristics: " + data.traits;
+
+            // Smooth reveal
+            resultBox.style.display = "block";
+        }
+    </script>
+</body>
+</html>
